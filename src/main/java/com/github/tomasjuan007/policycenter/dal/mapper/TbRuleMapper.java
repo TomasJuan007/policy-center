@@ -93,4 +93,20 @@ public interface TbRuleMapper {
      * @mbg.generated Thu Jan 07 21:15:39 CST 2021
      */
     int updateByPrimaryKey(TbRule record);
+
+    /**
+     * 增加节点左值
+     * @param incr 增值
+     * @param incrLftExample 条件
+     * @return 影响行数
+     */
+    int incrLftByExample(@Param("incr") int incr, @Param("example") TbRuleExample incrLftExample);
+
+    /**
+     * 增加节点右值
+     * @param incr 增值
+     * @param incrRgtExample 条件
+     * @return 影响行数
+     */
+    int incrRgtByExample(@Param("incr") int incr, @Param("example") TbRuleExample incrRgtExample);
 }

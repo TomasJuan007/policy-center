@@ -31,4 +31,12 @@ public class RuleController {
                           @RequestParam(value = "val")String val) {
         return ruleService.addRoot(name, val).toString();
     }
+
+    @PostMapping("pattern")
+    public String addPattern(@RequestParam(value = "pid")Long pid,
+                             @RequestParam(value = "name")String name,
+                             @RequestParam(value = "val")String val,
+                             @RequestParam(value = "op")String op) {
+        return ruleService.addChild(pid, name, val, op).toString();
+    }
 }

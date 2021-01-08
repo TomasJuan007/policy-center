@@ -1,0 +1,112 @@
+{
+	"info": {
+		"_postman_id": "49d3adee-5e11-4d71-b1de-21b79ec96da4",
+		"name": "policy-center",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "新增规则节点",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/rule?name=area&val=上海",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"rule"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "area"
+						},
+						{
+							"key": "val",
+							"value": "上海"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查询匹配规则",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"area\":\"深圳\",\"age\":10}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/conclusion",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"conclusion"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "新增规则模式",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"area\":\"深圳\",\"age\":10}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/pattern?pid=1&name=region&val=深圳&op=eq",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pattern"
+					],
+					"query": [
+						{
+							"key": "pid",
+							"value": "1"
+						},
+						{
+							"key": "name",
+							"value": "region"
+						},
+						{
+							"key": "val",
+							"value": "深圳"
+						},
+						{
+							"key": "op",
+							"value": "eq"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
