@@ -1,4 +1,4 @@
-package com.github.tomasjuan007.policycenter.vo;
+package com.github.tomasjuan007.policycenter.vo.lane;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;

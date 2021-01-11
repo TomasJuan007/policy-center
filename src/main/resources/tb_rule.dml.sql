@@ -1,6 +1,5 @@
-INSERT INTO `tb_rule` (`id`, `rule_id`, `app`, `name`, `val`, `op`, `lft`, `rgt`, `lvl`, `is_deleted`, `created_at`, `updated_at`)
-VALUES
-	(1, 1609836154839, '', '少年男性或深圳少年', '少年+(男性/深圳)', '', 1, 8, 0, 0, '2021-01-17 21:25:55', '2021-01-17 21:25:55'),
-	(2, 1609836154839, '', 'area', '深圳', 'eq', 2, 5, 1, 0, '2021-01-17 21:25:55', '2021-01-17 21:25:55'),
-	(3, 1609836154839, '', 'gender', 'male', 'eq', 3, 4, 2, 0, '2021-01-17 21:25:55', '2021-01-17 21:25:55'),
-	(4, 1609836154839, '', 'age', '[5,18]', 'btw', 6, 7, 1, 0, '2021-01-17 21:25:55', '2021-01-17 21:25:55');
+INSERT INTO `tb_rule` (`id`, `rule_id`, `app`, `name`, `val`, `op`, `lft`, `rgt`, `lvl`, `is_deleted`, `created_at`, `updated_at`) VALUES (1, 1609836154839, '', '中年女性或深圳中年', '中年+((!男性+!未知)/深圳)', '', 1, 10, 0, 0, '2021-01-17 21:25:55', '2021-01-11 16:53:21');
+INSERT INTO `tb_rule` (`id`, `rule_id`, `app`, `name`, `val`, `op`, `lft`, `rgt`, `lvl`, `is_deleted`, `created_at`, `updated_at`) VALUES (2, 1609836154839, '', 'area', '深圳', 'eq', 2, 7, 1, 0, '2021-01-17 21:25:55', '2021-01-11 16:53:21');
+INSERT INTO `tb_rule` (`id`, `rule_id`, `app`, `name`, `val`, `op`, `lft`, `rgt`, `lvl`, `is_deleted`, `created_at`, `updated_at`) VALUES (3, 1609836154839, '', 'gender', 'male', 'neq', 3, 4, 2, 0, '2021-01-17 21:25:55', '2021-01-11 16:54:23');
+INSERT INTO `tb_rule` (`id`, `rule_id`, `app`, `name`, `val`, `op`, `lft`, `rgt`, `lvl`, `is_deleted`, `created_at`, `updated_at`) VALUES (4, 1609836154839, '', 'age', '[25,35]', 'btw', 8, 9, 1, 0, '2021-01-17 21:25:55', '2021-01-11 16:53:21');
+INSERT INTO `tb_rule` (`id`, `rule_id`, `app`, `name`, `val`, `op`, `lft`, `rgt`, `lvl`, `is_deleted`, `created_at`, `updated_at`) VALUES (5, 1609836154839, '', 'gender', 'null', 'neq', 5, 6, 2, 0, '2021-01-11 16:53:21', '2021-01-11 16:54:32');

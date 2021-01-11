@@ -1,20 +1,19 @@
-package com.github.tomasjuan007.policycenter.service.impl;
+package com.github.tomasjuan007.policycenter.service.impl.flow;
 
 import com.github.tomasjuan007.policycenter.dal.model.TbRule;
-import com.github.tomasjuan007.policycenter.service.RuleFlowService;
-import com.github.tomasjuan007.policycenter.strategy.OpStrategy;
-import com.github.tomasjuan007.policycenter.strategy.OpStrategyFactory;
-import com.github.tomasjuan007.policycenter.vo.Conclusion;
-import com.github.tomasjuan007.policycenter.vo.Pattern;
-import com.github.tomasjuan007.policycenter.vo.Rule;
+import com.github.tomasjuan007.policycenter.vo.lane.Conclusion;
+import com.github.tomasjuan007.policycenter.vo.lane.Pattern;
+import com.github.tomasjuan007.policycenter.vo.lane.Rule;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Service
-public class RuleFlowServiceImpl implements RuleFlowService {
+@Service("lane")
+@Primary
+public class RuleFlowServiceLaneImpl extends AbstractRuleFlowService {
     private List<TbRule> ruleList;
 
     @Override
@@ -70,18 +69,5 @@ public class RuleFlowServiceImpl implements RuleFlowService {
             }
         }
         return Conclusion.builder().missList(missList).hitList(hitList).build();
-    }
-
-    private boolean doOperate(Map<String, String> facts, TbRule tbRule) {
-        String op = tbRule.getOp();
-        OpStrategy opStrategy = OpStrategyFactory.getOpStrategy(op);
-        if (opStrategy == null) {
-            return false;
-        }
-        String name = tbRule.getName();
-        String myVal = facts.get(name);
-        String val = tbRule.getVal();
-        return opStrategy.execute(myVal, val);
-
     }
 }

@@ -100,7 +100,7 @@ public interface TbRuleMapper {
      * @param incrLftExample 条件
      * @return 影响行数
      */
-    int incrLftByExample(@Param("incr") int incr, @Param("example") TbRuleExample incrLftExample);
+    int incrLftByExample(@Param("incr") long incr, @Param("example") TbRuleExample incrLftExample);
 
     /**
      * 增加节点右值
@@ -108,5 +108,5 @@ public interface TbRuleMapper {
      * @param incrRgtExample 条件
      * @return 影响行数
      */
-    int incrRgtByExample(@Param("incr") int incr, @Param("example") TbRuleExample incrRgtExample);
+    int incrRgtByExample(@Param("incr") long incr, @Param("example") TbRuleExample incrRgtExample);
 }

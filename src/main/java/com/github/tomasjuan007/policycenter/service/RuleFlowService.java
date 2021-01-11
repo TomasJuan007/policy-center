@@ -1,7 +1,7 @@
 package com.github.tomasjuan007.policycenter.service;
 
 import com.github.tomasjuan007.policycenter.dal.model.TbRule;
-import com.github.tomasjuan007.policycenter.vo.Conclusion;
+import com.github.tomasjuan007.policycenter.vo.lane.Conclusion;
 
 import java.util.List;
 import java.util.Map;

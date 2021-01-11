@@ -396,7 +396,7 @@
   <update id="incrLftByExample" parameterType="map">
     update tb_rule
     <set>
-        lft = lft+#{incr,jdbcType=INTEGER},
+        lft = lft+#{incr,jdbcType=BIGINT},
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -406,7 +406,7 @@
   <update id="incrRgtByExample" parameterType="map">
     update tb_rule
     <set>
-      rgt = rgt+#{incr,jdbcType=INTEGER},
+      rgt = rgt+#{incr,jdbcType=BIGINT},
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />

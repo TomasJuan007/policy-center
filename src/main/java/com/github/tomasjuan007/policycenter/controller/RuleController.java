@@ -1,30 +1,16 @@
 package com.github.tomasjuan007.policycenter.controller;
 
 import com.github.tomasjuan007.policycenter.dal.model.TbRule;
-import com.github.tomasjuan007.policycenter.service.RuleFlowService;
 import com.github.tomasjuan007.policycenter.service.RuleService;
-import com.github.tomasjuan007.policycenter.vo.Conclusion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
-@RestController
+@RestController("rule")
 public class RuleController {
     @Autowired
-    private RuleFlowService ruleFlowService;
-    @Autowired
     private RuleService ruleService;
-
-
-    @GetMapping("conclusion")
-    public Conclusion getConclusion(@RequestBody Map<String, String> facts) {
-        List<TbRule> ruleList = ruleService.getRuleListByPreOrderReversal();
-        ruleFlowService.setRuleList(ruleList);
-        return ruleFlowService.getConclusion(facts);
-    }
-
 
     @PostMapping("rule")
     public String addRule(@RequestParam(value = "name")String name,
@@ -38,5 +24,33 @@ public class RuleController {
                              @RequestParam(value = "val")String val,
                              @RequestParam(value = "op")String op) {
         return ruleService.addChild(pid, name, val, op).toString();
+    }
+
+    @GetMapping("rootNodes")
+    public List<TbRule> getRootNodes(@RequestParam(value = "app")String app) {
+        return ruleService.getRootNodes(app);
+    }
+
+    @GetMapping("childNodes")
+    public List<TbRule> getChildNodes(@RequestParam(value = "id")Long id) {
+        return ruleService.getChildNodes(id);
+    }
+
+    @PutMapping("/node")
+    public String editNode(@RequestParam(value = "id")Long id,
+                           @RequestParam(value = "name", required = false)String name,
+                           @RequestParam(value = "val", required = false)String val,
+                           @RequestParam(value = "op", required = false)String op) {
+        return ruleService.editNode(id, name, val, op).toString();
+    }
+
+    @DeleteMapping("/node")
+    public String deleteNode(@RequestParam(value = "id")Long id,
+                             @RequestParam(value = "safe", required = false)boolean safe) {
+        try {
+            return ruleService.deleteNode(id, safe).toString();
+        } catch (Exception e) {
+            return e.getMessage();
+        }
     }
 }
