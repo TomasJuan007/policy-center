@@ -118,4 +118,11 @@ public interface TbRuleMapper {
      * @return RuleNode列表
      */
     List<RuleNode> selectRuleNodesByExample(TbRuleExample example);
+
+    /**
+     * 性能测试插入数据（tb_rule.performance.dml.sql）
+     * @param ruleId 规则ID
+     * @return 影响行数
+     */
+    int insertPerformanceRecord(@Param("ruleId")Long ruleId);
 }

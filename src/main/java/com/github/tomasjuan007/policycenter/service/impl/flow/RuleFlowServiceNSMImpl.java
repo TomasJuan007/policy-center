@@ -16,7 +16,7 @@ public class RuleFlowServiceNSMImpl extends AbstractRuleFlowService implements R
     @Autowired
     private TbRuleMapper ruleMapper;
 
-    private Set<Long> matchIdSet = new HashSet<>();
+    private final Set<Long> matchIdSet = new HashSet<>();
 
     @Override
     public List<Long> getHitRuleIds(Map<String, String> facts) {

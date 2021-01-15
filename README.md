@@ -11,5 +11,4 @@ A rule engine based on Nested Set Model.
 参考开源实现[https://gitee.com/NSMRule](https://gitee.com/NSMRule)
 
 #下一步
-- 整理依赖（GSON工具类可以去掉）
-- 性能测试
+clean up

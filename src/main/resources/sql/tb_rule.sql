@@ -10,7 +10,7 @@ CREATE TABLE `tb_rule` (
   `lvl` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '节点层级',
   `is_deleted` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '是否删除',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',blogsdb
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
