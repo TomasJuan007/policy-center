@@ -412,4 +412,24 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+
+  <select id="selectRuleNodesByExample" parameterType="com.github.tomasjuan007.policycenter.dal.model.TbRuleExample" resultType="com.github.tomasjuan007.policycenter.vo.nsm.RuleNode">
+    select
+      a.id,
+      a.rule_id as ruleId,
+      a.name,
+      a.val,
+      a.op,
+      a.lvl,
+      group_concat(b.id) as childIds
+    from tb_rule a
+    left join tb_rule b
+    on b.rule_id = a.rule_id
+    <![CDATA[
+      and b.lft > a.lft
+      and b.rgt < a.rgt
+    ]]>
+    and b.lvl = a.lvl+1
+    group by a.id
+  </select>
 </mapper>

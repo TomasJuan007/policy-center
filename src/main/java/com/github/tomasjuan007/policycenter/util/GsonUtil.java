@@ -2,8 +2,6 @@ package com.github.tomasjuan007.policycenter.util;
 
 import com.google.gson.*;
 
-import java.lang.reflect.Type;
-
 public class GsonUtil {
     private static final Gson GSON;
     private static final Gson GSON_NULL;

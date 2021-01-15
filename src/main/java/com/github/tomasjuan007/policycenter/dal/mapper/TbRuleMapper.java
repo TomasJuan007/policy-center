@@ -3,6 +3,8 @@ package com.github.tomasjuan007.policycenter.dal.mapper;
 import com.github.tomasjuan007.policycenter.dal.model.TbRule;
 import com.github.tomasjuan007.policycenter.dal.model.TbRuleExample;
 import java.util.List;
+
+import com.github.tomasjuan007.policycenter.vo.nsm.RuleNode;
 import org.apache.ibatis.annotations.Param;
 
 public interface TbRuleMapper {
@@ -109,4 +111,11 @@ public interface TbRuleMapper {
      * @return 影响行数
      */
     int incrRgtByExample(@Param("incr") long incr, @Param("example") TbRuleExample incrRgtExample);
+
+    /**
+     * 获取带直接子节点信息的规则节点
+     * @param example 条件
+     * @return RuleNode列表
+     */
+    List<RuleNode> selectRuleNodesByExample(TbRuleExample example);
 }

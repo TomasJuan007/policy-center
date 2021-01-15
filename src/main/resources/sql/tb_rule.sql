@@ -13,3 +13,5 @@ CREATE TABLE `tb_rule` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',blogsdb
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `tb_rule` ADD INDEX idx_rule_id (`rule_id`);

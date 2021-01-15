@@ -1,8 +1,15 @@
 # policy-center
 A rule engine based on Nested Set Model.
 
-# NSM实现方式（TODO）
+# NSM实现方式
 基于多叉树的规则引擎
 用一棵采用嵌套集合模型保存到数据库的多叉树表示一个规则
 同一分支的模式（模式包含模式名称、参考值、关系运算符）是AND关系，不同分支的模式是OR关系
 当一个事实可以从根节点匹配到叶子节点，则该事实匹配上这个规则
+
+#Lane实现
+参考开源实现[https://gitee.com/NSMRule](https://gitee.com/NSMRule)
+
+#下一步
+- 整理依赖（GSON工具类可以去掉）
+- 性能测试

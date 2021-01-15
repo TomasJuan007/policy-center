@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("rule")
+@RestController
+@RequestMapping("rule")
 public class RuleController {
     @Autowired
     private RuleService ruleService;

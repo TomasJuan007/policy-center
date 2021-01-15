@@ -1,4 +1,4 @@
-package com.github.tomasjuan007.policycenter.service;
+package com.github.tomasjuan007.policycenter.service.impl.flow;
 
 import com.github.tomasjuan007.policycenter.dal.model.TbRule;
 import com.github.tomasjuan007.policycenter.vo.lane.Conclusion;
@@ -6,7 +6,7 @@ import com.github.tomasjuan007.policycenter.vo.lane.Conclusion;
 import java.util.List;
 import java.util.Map;
 
-public interface RuleFlowService {
+public interface RuleFlowLaneService {
     /**
      * 注入规则
      * @param ruleList 规则列表
