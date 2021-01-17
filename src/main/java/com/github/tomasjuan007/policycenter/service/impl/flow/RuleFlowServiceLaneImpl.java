@@ -1,9 +1,12 @@
 package com.github.tomasjuan007.policycenter.service.impl.flow;
 
+import com.github.tomasjuan007.policycenter.dal.mapper.TbRuleMapper;
 import com.github.tomasjuan007.policycenter.dal.model.TbRule;
+import com.github.tomasjuan007.policycenter.dal.model.TbRuleExample;
 import com.github.tomasjuan007.policycenter.vo.lane.Conclusion;
 import com.github.tomasjuan007.policycenter.vo.lane.Pattern;
 import com.github.tomasjuan007.policycenter.vo.lane.Rule;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,15 +15,15 @@ import java.util.Map;
 
 @Service
 public class RuleFlowServiceLaneImpl extends AbstractRuleFlowService implements RuleFlowLaneService {
-    private List<TbRule> ruleList;
-
-    @Override
-    public void setRuleList(List<TbRule> ruleList) {
-        this.ruleList = ruleList;
-    }
+    @Autowired
+    private TbRuleMapper ruleMapper;
 
     @Override
     public Conclusion getConclusion(Map<String, String> facts) {
+        TbRuleExample example = new TbRuleExample();
+        example.setOrderByClause("rule_id,lft desc");
+        List<TbRule> ruleList = ruleMapper.selectByExample(example);
+
         List<Rule> hitList = new ArrayList<>();
         List<Rule> missList = new ArrayList<>();
         List<Pattern> ruleHitList = new ArrayList<>();
@@ -53,10 +56,12 @@ public class RuleFlowServiceLaneImpl extends AbstractRuleFlowService implements 
                 if (i >= j) {
                     continue;
                 }
+
                 String op = tbRule.getOp();
                 String name = tbRule.getName();
                 String val = tbRule.getVal();
                 boolean status = doOperate(facts, name, val, op);
+
                 long subRuleCount = (tbRule.getRgt() - tbRule.getLft() + 1) / 2 + tbRule.getLvl() - 1;
                 if (status) {
                     ruleHitList.add(Pattern.builder().name(tbRule.getName()).val(tbRule.getVal()).op(tbRule.getOp()).build());

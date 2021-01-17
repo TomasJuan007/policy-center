@@ -17,13 +17,6 @@ public class RuleServiceImpl implements RuleService {
     private TbRuleMapper ruleMapper;
 
     @Override
-    public List<TbRule> getRuleListByPreOrderReversal() {
-        TbRuleExample example = new TbRuleExample();
-        example.setOrderByClause("rule_id,lft desc");
-        return ruleMapper.selectByExample(example);
-    }
-
-    @Override
     public Long addRoot(String name, String val) {
         TbRule rule = new TbRule();
         rule.setName(name);

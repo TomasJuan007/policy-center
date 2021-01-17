@@ -1,7 +1,5 @@
 package com.github.tomasjuan007.policycenter.controller;
 
-import com.github.tomasjuan007.policycenter.dal.model.TbRule;
-import com.github.tomasjuan007.policycenter.service.RuleService;
 import com.github.tomasjuan007.policycenter.service.impl.flow.RuleFlowLaneService;
 import com.github.tomasjuan007.policycenter.service.impl.flow.RuleFlowNSMService;
 import com.github.tomasjuan007.policycenter.vo.lane.Conclusion;
@@ -20,8 +18,6 @@ public class RuleFlowController {
     @Autowired
     private RuleFlowLaneService ruleFlowLaneService;
     @Autowired
-    private RuleService ruleService;
-    @Autowired
     private RuleFlowNSMService ruleFlowNSMService;
 
     @GetMapping("hitRuleIds")
@@ -31,8 +27,6 @@ public class RuleFlowController {
 
     @GetMapping("conclusion")
     public Conclusion getConclusionByLane(@RequestBody Map<String, String> facts) {
-        List<TbRule> ruleList = ruleService.getRuleListByPreOrderReversal();
-        ruleFlowLaneService.setRuleList(ruleList);
         return ruleFlowLaneService.getConclusion(facts);
     }
 }

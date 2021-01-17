@@ -12,7 +12,7 @@ public class DataInitializer {
 
     @Test
     public void test() {
-        for (long i=0; i<100; i++)
+        for (long i=0; i<2; i++)
         tbRuleMapper.insertPerformanceRecord(i);
     }
 
