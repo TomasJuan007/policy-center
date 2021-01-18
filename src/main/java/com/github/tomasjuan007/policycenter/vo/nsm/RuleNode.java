@@ -14,6 +14,7 @@ public class RuleNode {
     private String name;
     private String val;
     private String op;
+    private Long rgt;
     private Long lvl;
-    private String childIds;
+    private Long pid;
 }

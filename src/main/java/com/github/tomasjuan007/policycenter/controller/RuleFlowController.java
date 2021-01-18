@@ -20,9 +20,14 @@ public class RuleFlowController {
     @Autowired
     private RuleFlowNSMService ruleFlowNSMService;
 
-    @GetMapping("hitRuleIds")
-    public List<Long> getHitRuleIds(@RequestBody Map<String, String> facts) {
-        return ruleFlowNSMService.getHitRuleIds(facts);
+    @GetMapping("hitRuleIds-or")
+    public List<Long> getHitRuleIdsORMode(@RequestBody Map<String, String> facts) {
+        return ruleFlowNSMService.getHitRuleIdsORMode(facts);
+    }
+
+    @GetMapping("hitRuleIds-and")
+    public List<Long> getHitRuleIdsANDMode(@RequestBody Map<String, String> facts) {
+        return ruleFlowNSMService.getHitRuleIdsANDMode(facts);
     }
 
     @GetMapping("conclusion")

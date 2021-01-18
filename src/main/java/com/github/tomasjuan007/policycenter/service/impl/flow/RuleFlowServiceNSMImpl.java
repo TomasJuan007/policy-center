@@ -1,12 +1,9 @@
 package com.github.tomasjuan007.policycenter.service.impl.flow;
 
 import com.github.tomasjuan007.policycenter.dal.mapper.TbRuleMapper;
-import com.github.tomasjuan007.policycenter.dal.model.TbRuleExample;
 import com.github.tomasjuan007.policycenter.vo.nsm.RuleNode;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -19,81 +16,118 @@ public class RuleFlowServiceNSMImpl extends AbstractRuleFlowService implements R
     private final Set<Long> matchIdSet = new HashSet<>();
 
     @Override
-    public List<Long> getHitRuleIds(Map<String, String> facts) {
-        TbRuleExample example = new TbRuleExample();
-        List<RuleNode> ruleNodeList = ruleMapper.selectRuleNodesByExample(example);
-        if (ruleNodeList==null) {
-            return null;
-        }
-        Map<Long, List<RuleNode>> ruleNodeListGroupByRuleId = ruleNodeList.stream().collect(Collectors.groupingBy(RuleNode::getRuleId));
+    public List<Long> getHitRuleIdsORMode(Map<String, String> facts) {
         List<Long> hitList = new ArrayList<>();
-        for (Map.Entry<Long, List<RuleNode>> entry : ruleNodeListGroupByRuleId.entrySet()) {
-            List<RuleNode> ruleNodes = entry.getValue();
-            Map<String, RuleNode> ruleNodeMap = new HashMap<>();
-            ruleNodes.forEach(e -> ruleNodeMap.put(e.getId().toString(), e));
-            List<Long> idList = ruleNodes.stream()
-                    .filter(e -> e.getLvl()==0 && doOperate(facts, e.getName(), e.getVal(), e.getOp()))
-                    .map(RuleNode::getId)
-                    .collect(Collectors.toList());
-            matchIdSet.clear();
-            Boolean hit = recursive(facts, idList, ruleNodeMap);
-            if (!CollectionUtils.isEmpty(idList) && hit!=null && hit) {
-                hitList.add(entry.getKey());
+        //维护一个节点映射表方便通过ID获取节点
+        List<RuleNode> nodeList = ruleMapper.selectNodesWithParentId();
+        if (nodeList==null) {
+            return new ArrayList<>();
+        }
+        Map<Long, RuleNode> ruleNodeMap = new HashMap<>();
+        nodeList.forEach(e -> ruleNodeMap.put(e.getId(), e));
+        //按规则分组处理
+        List<RuleNode> leafNodeList = ruleMapper.selectLeafNodesByPreOrderReversal();
+        Map<Long, List<RuleNode>> collect = leafNodeList.stream().collect(Collectors.groupingBy(RuleNode::getRuleId));
+        for (Map.Entry<Long, List<RuleNode>> leafNodeByRuleListEntry : collect.entrySet()) {
+            //叶子节点按前序倒序入栈
+            Deque<RuleNode> stack = new LinkedList<>();
+            List<RuleNode> leafNodeByRuleList = leafNodeByRuleListEntry.getValue();
+            for (RuleNode leafNode : leafNodeByRuleList) {
+                stack.push(leafNode);
+            }
+            Long rgtThreshold = 0L;
+            while (!stack.isEmpty()) {
+                RuleNode leafNode = stack.pop();
+                String name = leafNode.getName();
+                String val = leafNode.getVal();
+                String op = leafNode.getOp();
+                Long rgt = leafNode.getRgt();
+                Long lvl = leafNode.getLvl();
+                //保持按前序顺序处理，由于按照由叶子节点往根节点顺序执行，前序小于当前处理节点对规则无效
+                if (rgt < rgtThreshold) {
+                    continue;
+                }
+                rgtThreshold = rgt;
+                //判断模式节点是否匹配
+                boolean status = doOperate(facts, name, val, op);
+                //到达根节点
+                if (lvl == 0) {
+                    if (status) {
+                        hitList.add(leafNode.getRuleId());
+                    }
+                    continue;
+                }
+                //如果匹配，向上处理父节点
+                if (status) {
+                    Long pid = leafNode.getPid();
+                    RuleNode parentNode = ruleNodeMap.get(pid);
+                    if (parentNode!=null) {
+                        stack.push(parentNode);
+                    }
+                }
             }
         }
-
         return hitList;
     }
 
-    private Boolean recursive(Map<String, String> facts,
-                              List<Long> idList,
-                              Map<String, RuleNode> ruleNodeMap) {
-        if (CollectionUtils.isEmpty(idList)) {
-            return true;
+    @Override
+    public List<Long> getHitRuleIdsANDMode(Map<String, String> facts) {
+        List<Long> hitList = new ArrayList<>();
+        //维护一个节点映射表方便通过ID获取节点
+        List<RuleNode> nodeList = ruleMapper.selectNodesWithParentId();
+        if (nodeList==null) {
+            return new ArrayList<>();
         }
-        for (Long id : idList) {
-            RuleNode ruleNode = ruleNodeMap.get(id.toString());
-            if (ruleNode == null) {
-                return null;
+        Map<Long, RuleNode> ruleNodeMap = new HashMap<>();
+        nodeList.forEach(e -> ruleNodeMap.put(e.getId(), e));
+        //按规则分组处理
+        List<RuleNode> leafNodeList = ruleMapper.selectNodesBySubOrderReversal();
+        Map<Long, List<RuleNode>> collect = leafNodeList.stream().collect(Collectors.groupingBy(RuleNode::getRuleId));
+        for (Map.Entry<Long, List<RuleNode>> leafNodeByRuleListEntry : collect.entrySet()) {
+            //节点按前序倒序入栈
+            Deque<RuleNode> stack = new LinkedList<>();
+            List<RuleNode> leafNodeByRuleList = leafNodeByRuleListEntry.getValue();
+            for (RuleNode leafNode : leafNodeByRuleList) {
+                stack.push(leafNode);
             }
-            Long nodeId = ruleNode.getId();
-            if (matchIdSet.contains(nodeId)) {
-                continue;
-            }
-            if (!doOperate(facts, ruleNode.getName(), ruleNode.getVal(), ruleNode.getOp())) {
-                continue;
-            }
-            String childIds = ruleNode.getChildIds();
-            if (StringUtils.isBlank(childIds)) {
-                return true;
-            }
-            for (String childId : childIds.split(",")) {
-                RuleNode childNode = ruleNodeMap.get(childId);
-                if (childNode == null) {
-                    return null;
-                }
-                if (!doOperate(facts, childNode.getName(), childNode.getVal(), childNode.getOp())) {
+            Long rgtThreshold = 0L;
+            boolean previousStatus = false;
+            Long previousLvl = null;
+            while (!stack.isEmpty()) {
+                RuleNode leafNode = stack.pop();
+                String name = leafNode.getName();
+                String val = leafNode.getVal();
+                String op = leafNode.getOp();
+                Long rgt = leafNode.getRgt();
+                Long lvl = leafNode.getLvl();
+                //保持按后序顺序处理，由于按照由叶子节点往根节点顺序执行，后序小于当前处理节点对规则无效
+                if (rgt < rgtThreshold) {
                     continue;
                 }
-
-                matchIdSet.add(childNode.getId());
-
-                String ids = childNode.getChildIds();
-                if (StringUtils.isBlank(ids)) {
-                    return true;
+                rgtThreshold = rgt;
+                //判断模式节点是否匹配
+                boolean status = doOperate(facts, name, val, op);
+                //到达根节点
+                if (lvl == 0) {
+                    if (previousStatus||previousLvl==null) {
+                        hitList.add(leafNode.getRuleId());
+                    }
+                    continue;
                 }
-                List<Long> idsLong = new ArrayList<>();
-                String[] idsStr = ids.split(",");
-                for (String idStr : idsStr) {
-                    idsLong.add(Long.parseLong(idStr));
+                //如果不匹配，且不是下层成功匹配而来，则向上处理父节点
+                boolean fromBelow = previousLvl==null || previousLvl>lvl;
+                if (!status && !(previousStatus && fromBelow)) {
+                    Long pid = leafNode.getPid();
+                    RuleNode parentNode = ruleNodeMap.get(pid);
+                    if (parentNode!=null) {
+                        stack.push(parentNode);
+                    }
+                } else if (!(previousStatus && fromBelow)) {
+                    previousStatus = status;
+                    previousLvl = lvl;
                 }
-                Boolean status = recursive(facts, idsLong, ruleNodeMap);
-                if (status!=null && status) {
-                    return true;
-                }
-
             }
         }
-        return false;
+        return hitList;
     }
 }

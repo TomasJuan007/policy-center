@@ -1,6 +1,6 @@
 package com.github.tomasjuan007.policycenter.performance;
 
-import com.github.tomasjuan007.policycenter.service.impl.flow.RuleFlowNSMService;
+import com.github.tomasjuan007.policycenter.service.impl.flow.RuleFlowLaneService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,9 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootTest
-public class RuleFlowNSMServiceTest {
+public class RuleFlowLaneServiceTest {
     @Autowired
-    private RuleFlowNSMService ruleFlowNSMService;
+    private RuleFlowLaneService ruleFlowLaneService;
 
     @Test
     public void test() throws Exception {
@@ -20,7 +20,7 @@ public class RuleFlowNSMServiceTest {
             facts.put("age", "25");
             facts.put("area", "深圳");
             facts.put("gender", "女性");
-            ruleFlowNSMService.getHitRuleIdsORMode(facts);
+            ruleFlowLaneService.getConclusion(facts);
         });
     }
 }

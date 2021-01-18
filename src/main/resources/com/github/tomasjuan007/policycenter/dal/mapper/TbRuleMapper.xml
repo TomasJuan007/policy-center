@@ -413,38 +413,87 @@
     </if>
   </update>
 
-  <select id="selectRuleNodesByExample" parameterType="com.github.tomasjuan007.policycenter.dal.model.TbRuleExample" resultType="com.github.tomasjuan007.policycenter.vo.nsm.RuleNode">
+  <select id="selectNodesWithParentId" parameterType="com.github.tomasjuan007.policycenter.dal.model.TbRuleExample" resultType="com.github.tomasjuan007.policycenter.vo.nsm.RuleNode">
     select
       a.id,
       a.rule_id as ruleId,
       a.name,
       a.val,
       a.op,
+      a.lft,
+      a.rgt,
       a.lvl,
-      group_concat(b.id) as childIds
+      b.id as pid
     from tb_rule a
     left join tb_rule b
     on b.rule_id = a.rule_id
+    and b.lvl+1 = a.lvl
     <![CDATA[
-      and b.lft > a.lft
-      and b.rgt < a.rgt
+      and b.lft < a.lft
+      and b.rgt > a.rgt
     ]]>
-    and b.lvl = a.lvl+1
     group by a.id
+  </select>
+
+  <select id="selectNodesBySubOrderReversal" parameterType="com.github.tomasjuan007.policycenter.dal.model.TbRuleExample" resultType="com.github.tomasjuan007.policycenter.vo.nsm.RuleNode">
+    select
+      a.id,
+      a.rule_id as ruleId,
+      a.name,
+      a.val,
+      a.op,
+      a.lft,
+      a.rgt,
+      a.lvl,
+      b.id as pid
+    from tb_rule a
+    left join tb_rule b
+    on b.rule_id = a.rule_id
+    and b.lvl+1 = a.lvl
+    <![CDATA[
+      and b.lft < a.lft
+      and b.rgt > a.rgt
+    ]]>
+    group by a.id
+    ORDER BY a.rgt desc
+  </select>
+
+  <select id="selectLeafNodesByPreOrderReversal" parameterType="com.github.tomasjuan007.policycenter.dal.model.TbRuleExample" resultType="com.github.tomasjuan007.policycenter.vo.nsm.RuleNode">
+    select
+      a.id,
+      a.rule_id as ruleId,
+      a.name,
+      a.val,
+      a.op,
+      a.lft,
+      a.rgt,
+      a.lvl,
+      b.id as pid
+    from tb_rule a
+    left join tb_rule b
+    on b.rule_id = a.rule_id
+    and b.lvl+1 = a.lvl
+    <![CDATA[
+      and b.lft < a.lft
+      and b.rgt > a.rgt
+    ]]>
+    group by a.id
+    HAVING (a.rgt-a.lft)=1
+    ORDER BY a.lft desc
   </select>
 
   <insert id="insertPerformanceRecord"  parameterType="map">
     INSERT INTO `tb_rule` (`rule_id`, `app`, `name`, `val`, `op`, `lft`, `rgt`, `lvl`, `is_deleted`, `created_at`, `updated_at`)
     VALUES
     (#{ruleId,jdbcType=BIGINT}, '', 'age', '[18,35]', 'btw', 1, 26, 0, 0, '2021-01-15 19:49:10', '2021-01-15 19:49:10'),
-    (#{ruleId,jdbcType=BIGINT}, '', 'age', '[18,35]', 'btw', 2, 9, 1, 0, '2021-01-15 19:49:10', '2021-01-15 19:49:10'),
+    (#{ruleId,jdbcType=BIGINT}, '', 'age', '[18,25]', 'btw', 2, 9, 1, 0, '2021-01-15 19:49:10', '2021-01-15 19:49:10'),
     (#{ruleId,jdbcType=BIGINT}, '', 'age', '[18,35]', 'btw', 10, 17, 1, 0, '2021-01-15 19:49:10', '2021-01-15 19:49:10'),
-    (#{ruleId,jdbcType=BIGINT}, '', 'age', '[18,35]', 'btw', 18, 25, 1, 0, '2021-01-15 19:49:10', '2021-01-15 19:49:10'),
-    (#{ruleId,jdbcType=BIGINT}, '', 'age', '[18,35]', 'btw', 3, 4, 2, 0, '2021-01-15 19:49:10', '2021-01-15 19:49:10'),
+    (#{ruleId,jdbcType=BIGINT}, '', 'age', '[18,25]', 'btw', 18, 25, 1, 0, '2021-01-15 19:49:10', '2021-01-15 19:49:10'),
+    (#{ruleId,jdbcType=BIGINT}, '', 'age', '[18,25]', 'btw', 3, 4, 2, 0, '2021-01-15 19:49:10', '2021-01-15 19:49:10'),
     (#{ruleId,jdbcType=BIGINT}, '', 'age', '[18,25]', 'btw', 5, 6, 2, 0, '2021-01-15 19:49:10', '2021-01-15 19:49:10'),
     (#{ruleId,jdbcType=BIGINT}, '', 'age', '[18,25]', 'btw', 7, 8, 2, 0, '2021-01-15 19:49:10', '2021-01-15 19:49:10'),
     (#{ruleId,jdbcType=BIGINT}, '', 'age', '[18,25]', 'btw', 11, 12, 2, 0, '2021-01-15 19:49:10', '2021-01-15 19:49:10'),
-    (#{ruleId,jdbcType=BIGINT}, '', 'age', '[18,25]', 'btw', 13, 14, 2, 0, '2021-01-15 19:49:10', '2021-01-15 19:49:10'),
+    (#{ruleId,jdbcType=BIGINT}, '', 'age', '[18,35]', 'btw', 13, 14, 2, 0, '2021-01-15 19:49:10', '2021-01-15 19:49:10'),
     (#{ruleId,jdbcType=BIGINT}, '', 'age', '[18,25]', 'btw', 15, 16, 2, 0, '2021-01-15 19:49:10', '2021-01-15 19:49:10'),
     (#{ruleId,jdbcType=BIGINT}, '', 'age', '[18,25]', 'btw', 19, 20, 2, 0, '2021-01-15 19:49:10', '2021-01-15 19:49:10'),
     (#{ruleId,jdbcType=BIGINT}, '', 'age', '[18,25]', 'btw', 21, 22, 2, 0, '2021-01-15 19:49:10', '2021-01-15 19:49:10'),
