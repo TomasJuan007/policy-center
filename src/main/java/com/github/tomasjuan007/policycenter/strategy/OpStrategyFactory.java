@@ -26,6 +26,7 @@ public class OpStrategyFactory {
         map.put(RuleOpEnum.NOT_BETWEEN.getOp(), new NbtwStrategy());
         map.put(RuleOpEnum.IN.getOp(), new InStrategy());
         map.put(RuleOpEnum.NOT_IN.getOp(), new NinStrategy());
-        map.put(RuleOpEnum.ANY.getOp(), new AllStrategy());
+        map.put(RuleOpEnum.ANY.getOp(), new AnyStrategy());
+        map.put(RuleOpEnum.NONE.getOp(), new NoneStrategy());
     }
 }

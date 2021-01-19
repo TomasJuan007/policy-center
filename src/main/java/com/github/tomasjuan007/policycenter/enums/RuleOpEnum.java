@@ -45,6 +45,10 @@ public enum RuleOpEnum {
      * 任意值
      */
     ANY("any", "任意值"),
+    /**
+     * 任意值
+     */
+    NONE("none", "不"),
     ;
 
     private String op;
