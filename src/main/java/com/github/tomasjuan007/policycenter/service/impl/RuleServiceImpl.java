@@ -1,5 +1,6 @@
 package com.github.tomasjuan007.policycenter.service.impl;
 
+import com.github.tomasjuan007.policycenter.dal.mapper.TbRuleExtMapper;
 import com.github.tomasjuan007.policycenter.dal.mapper.TbRuleMapper;
 import com.github.tomasjuan007.policycenter.dal.model.TbRule;
 import com.github.tomasjuan007.policycenter.dal.model.TbRuleExample;
@@ -15,6 +16,8 @@ import java.util.List;
 public class RuleServiceImpl implements RuleService {
     @Autowired
     private TbRuleMapper ruleMapper;
+    @Autowired
+    private TbRuleExtMapper ruleExtMapper;
 
     @Override
     public Long addRoot(String name, String val) {
@@ -54,13 +57,13 @@ public class RuleServiceImpl implements RuleService {
         incrRgtExample.createCriteria()
                 .andRuleIdEqualTo(ruleId)
                 .andRgtGreaterThanOrEqualTo(pattern.getLft());
-        ruleMapper.incrRgtByExample(2L, incrRgtExample);
+        ruleExtMapper.incrRgtByExample(2L, incrRgtExample);
 
         TbRuleExample incrLftExample = new TbRuleExample();
         incrLftExample.createCriteria()
                 .andRuleIdEqualTo(ruleId)
                 .andLftGreaterThanOrEqualTo(pattern.getRgt());
-        ruleMapper.incrLftByExample(2L, incrLftExample);
+        ruleExtMapper.incrLftByExample(2L, incrLftExample);
 
         int affectRows = ruleMapper.insertSelective(pattern);
         if (affectRows > 0) {
@@ -135,13 +138,13 @@ public class RuleServiceImpl implements RuleService {
         incrRgtExample.createCriteria()
                 .andRuleIdEqualTo(ruleId)
                 .andRgtGreaterThanOrEqualTo(rgt);
-        ruleMapper.incrRgtByExample(-incr, incrRgtExample);
+        ruleExtMapper.incrRgtByExample(-incr, incrRgtExample);
 
         TbRuleExample incrLftExample = new TbRuleExample();
         incrLftExample.createCriteria()
                 .andRuleIdEqualTo(ruleId)
                 .andLftGreaterThanOrEqualTo(rgt);
-        ruleMapper.incrLftByExample(-incr, incrLftExample);
+        ruleExtMapper.incrLftByExample(-incr, incrLftExample);
 
         if (affectRows > 0) {
             return node.getRuleId();

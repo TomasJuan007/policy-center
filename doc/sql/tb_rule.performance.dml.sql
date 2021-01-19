@@ -1,4 +1,4 @@
-#int insertPerformanceRecord(@Param("ruleId")Long ruleId);
+#insertPerformanceRecord(@Param("ruleId")Long ruleId)
 INSERT INTO `tb_rule` (`rule_id`, `app`, `name`, `val`, `op`, `lft`, `rgt`, `lvl`, `is_deleted`, `created_at`, `updated_at`) VALUES (1, '', 'age', '[18,35]', 'btw', 1, 26, 0, 0, '2021-01-15 19:49:10', '2021-01-15 19:49:10');
 INSERT INTO `tb_rule` (`rule_id`, `app`, `name`, `val`, `op`, `lft`, `rgt`, `lvl`, `is_deleted`, `created_at`, `updated_at`) VALUES (1, '', 'age', '[18,25]', 'btw', 2, 9, 1, 0, '2021-01-15 19:49:10', '2021-01-15 19:49:10');
 INSERT INTO `tb_rule` (`rule_id`, `app`, `name`, `val`, `op`, `lft`, `rgt`, `lvl`, `is_deleted`, `created_at`, `updated_at`) VALUES (1, '', 'age', '[18,35]', 'btw', 10, 17, 1, 0, '2021-01-15 19:49:10', '2021-01-15 19:49:10');

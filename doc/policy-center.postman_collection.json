@@ -6,37 +6,6 @@
 	},
 	"item": [
 		{
-			"name": "查询匹配规则（lane）",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"area\":\"深圳\",\r\n    \"age\":26,\r\n    \"gender\":\"女性\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/ruleFlow/conclusion",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"ruleFlow",
-						"conclusion"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "新增规则节点",
 			"request": {
 				"method": "POST",
@@ -232,7 +201,7 @@
 			"response": []
 		},
 		{
-			"name": "查询匹配规则",
+			"name": "查询匹配规则（lane）",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -249,14 +218,76 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/ruleFlow/hitRuleIds",
+					"raw": "localhost:8080/ruleFlow/conclusion",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"ruleFlow",
-						"hitRuleIds"
+						"conclusion"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查询匹配规则(nsm-and)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"area\":\"深圳\",\r\n    \"age\":26,\r\n    \"gender\":\"女性\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/ruleFlow/hitRuleIds-and",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ruleFlow",
+						"hitRuleIds-and"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查询匹配规则(nsm-or)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"area\":\"深圳\",\r\n    \"age\":26,\r\n    \"gender\":\"女性\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/ruleFlow/hitRuleIds-or",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ruleFlow",
+						"hitRuleIds-or"
 					]
 				}
 			},

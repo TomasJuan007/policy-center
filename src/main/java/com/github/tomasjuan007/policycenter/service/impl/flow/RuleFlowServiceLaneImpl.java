@@ -23,7 +23,10 @@ public class RuleFlowServiceLaneImpl extends AbstractRuleFlowService implements 
         TbRuleExample example = new TbRuleExample();
         example.setOrderByClause("rule_id,lft desc");
         List<TbRule> ruleList = ruleMapper.selectByExample(example);
+        return getConclusionBy(facts, ruleList);
+    }
 
+    public Conclusion getConclusionBy(Map<String, String> facts, List<TbRule> ruleList) {
         List<Rule> hitList = new ArrayList<>();
         List<Rule> missList = new ArrayList<>();
         List<Pattern> ruleHitList = new ArrayList<>();
