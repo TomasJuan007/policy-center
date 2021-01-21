@@ -1,5 +1,6 @@
 package com.github.tomasjuan007.policycenter.controller;
 
+import com.github.tomasjuan007.policycenter.service.impl.flow.RuleFlowASTService;
 import com.github.tomasjuan007.policycenter.service.impl.flow.RuleFlowLaneService;
 import com.github.tomasjuan007.policycenter.service.impl.flow.RuleFlowNSMService;
 import com.github.tomasjuan007.policycenter.vo.lane.Conclusion;
@@ -16,9 +17,16 @@ import java.util.Map;
 @RequestMapping("ruleFlow")
 public class RuleFlowController {
     @Autowired
-    private RuleFlowLaneService ruleFlowLaneService;
+    private RuleFlowASTService ruleFlowASTService;
     @Autowired
     private RuleFlowNSMService ruleFlowNSMService;
+    @Autowired
+    private RuleFlowLaneService ruleFlowLaneService;
+
+    @GetMapping("hitRuleIds")
+    public List<Long> getHitRuleIds(@RequestBody Map<String, String> facts) {
+        return ruleFlowASTService.getHitRuleIds(facts);
+    }
 
     @GetMapping("hitRuleIds-or")
     public List<Long> getHitRuleIdsORMode(@RequestBody Map<String, String> facts) {

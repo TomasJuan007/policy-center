@@ -17,4 +17,5 @@ public class RuleNode {
     private Long rgt;
     private Long lvl;
     private Long pid;
+    private Boolean status;
 }

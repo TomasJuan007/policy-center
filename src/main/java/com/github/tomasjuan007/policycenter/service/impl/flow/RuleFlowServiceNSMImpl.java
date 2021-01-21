@@ -13,8 +13,6 @@ public class RuleFlowServiceNSMImpl extends AbstractRuleFlowService implements R
     @Autowired
     private TbRuleExtMapper ruleExtMapper;
 
-    private final Set<Long> matchIdSet = new HashSet<>();
-
     @Override
     public List<Long> getHitRuleIdsORMode(Map<String, String> facts) {
         List<RuleNode> nodeList = ruleExtMapper.selectNodesWithParentId();

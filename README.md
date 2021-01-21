@@ -1,6 +1,9 @@
 # policy-center
 A rule engine based on Nested Set Model.
 
+# AST实现方式
+> 基于AST的规则引擎
+
 # NSM实现方式
 > 基于多叉树的规则引擎
 
@@ -22,6 +25,5 @@ A rule engine based on Nested Set Model.
 - 运行RuleFlowNSMServiceTest和RuleFlowLaneServiceTest
 
 # 下一步
-> 基于AST的规则引擎
-
-支持完全的规则语法，用中间节点表示‘与’和‘或’，用叶子节点表示规则模式
+- 数据库表按不同的规则引擎算法拆分
+- 考虑是否可以用访问者模式代替栈
