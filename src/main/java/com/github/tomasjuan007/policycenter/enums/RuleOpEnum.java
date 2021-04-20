@@ -46,7 +46,7 @@ public enum RuleOpEnum {
      */
     ANY("any", "任意值"),
     /**
-     * 任意值
+     * 拒绝任意值
      */
     NONE("none", "不"),
     ;
