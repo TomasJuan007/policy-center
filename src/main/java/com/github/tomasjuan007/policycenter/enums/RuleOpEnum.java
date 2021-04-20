@@ -2,13 +2,29 @@ package com.github.tomasjuan007.policycenter.enums;
 
 public enum RuleOpEnum {
     /**
+     * 任意值
+     */
+    ANY("any", "接受任意值"),
+    /**
+     * 拒绝任意值
+     */
+    NONE("none", "不接受任意值"),
+    /**
      * 等于
      */
-    EQUAL_TO("eq", "等于"),
+    EQUAL_TO("eq", "等同于"),
     /**
      * 不等于
      */
-    NOT_EQUAL_TO("neq", "不等于"),
+    NOT_EQUAL_TO("neq", "不等同于"),
+    /**
+     * 包含于
+     */
+    IN("in", "包含于"),
+    /**
+     * 不包含于
+     */
+    NOT_IN("nin", "不包含于"),
     /**
      * 大于
      */
@@ -28,27 +44,19 @@ public enum RuleOpEnum {
     /**
      * 区间内
      */
-    BETWEEN("btw", "属于"),
+    BETWEEN("btw", "在区间内"),
     /**
      * 区间外
      */
-    NOT_BETWEEN("nbtw", "不属于"),
+    NOT_BETWEEN("nbtw", "在区间外"),
     /**
-     * 包含于
+     * 在白名单里
      */
-    IN("in", "包含于"),
+    BLOB_IN("blob_in", "在白名单里"),
     /**
-     * 不包含于
+     * 在黑名单里
      */
-    NOT_IN("nin", "不包含于"),
-    /**
-     * 任意值
-     */
-    ANY("any", "任意值"),
-    /**
-     * 拒绝任意值
-     */
-    NONE("none", "不"),
+    BLOB_NIN("blob_nin", "在黑名单里"),
     ;
 
     private String op;

@@ -22,6 +22,8 @@
 		<fastjson.version>1.2.44</fastjson.version>
 		<gson.version>2.8.6</gson.version>
 		<commons-lang3.version>3.8.1</commons-lang3.version>
+		<commons-collections4.version>4.3</commons-collections4.version>
+		<roaringbitmap.version>0.9.3</roaringbitmap.version>
 		<guava.version>29.0-jre</guava.version>
 		<!-- plugin -->
 		<mybatis-generator.version>1.4.0</mybatis-generator.version>
@@ -68,6 +70,18 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>${commons-lang3.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>${commons-collections4.version}</version>
+		</dependency>
+
+		<!-- bitmap -->
+		<dependency>
+			<groupId>org.roaringbitmap</groupId>
+			<artifactId>RoaringBitmap</artifactId>
+			<version>${roaringbitmap.version}</version>
 		</dependency>
 
 		<!-- test -->
