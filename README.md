@@ -4,6 +4,8 @@ A rule engine based on Nested Set Model.
 # AST实现方式
 > 基于AST的规则引擎
 
+用一棵采用嵌套集合模型保存到数据库的多叉树表示一个规则，兄弟节点的AND和OR关系信息保存在父节点
+
 # NSM实现方式
 > 基于多叉树的规则引擎
 
@@ -22,7 +24,7 @@ A rule engine based on Nested Set Model.
 
 # 性能测试说明
 - DataInitializer添加@Test初始化三层的三叉完全树
-- 运行RuleFlowNSMServiceTest和RuleFlowLaneServiceTest
+- 运行RuleFlowASTServiceTest
 
 # 下一步
 - 数据库表按不同的规则引擎算法拆分
