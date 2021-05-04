@@ -41,6 +41,12 @@ public class BtwStrategy extends AbstractComparableOpStrategy {
         if (bounds.length!=2) {
             return false;
         }
-        return super.validate(bounds[0]) && super.validate(bounds[1]) && super.eval(bounds[0]) <= super.eval(bounds[1]);
+
+        List<String> originList = new ArrayList<>(Arrays.asList(bounds));
+        List<Double> evalList = evalList(originList);
+        if (evalList == null || evalList.size()!=originList.size()) {
+            return false;
+        }
+        return evalList.get(0) <= evalList.get(1);
     }
 }

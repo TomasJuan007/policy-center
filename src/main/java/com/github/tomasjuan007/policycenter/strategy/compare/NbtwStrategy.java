@@ -41,6 +41,6 @@ public class NbtwStrategy extends AbstractComparableOpStrategy {
         if (bounds.length!=2) {
             return false;
         }
-        return super.validate(bounds[0]) && super.validate(bounds[1]) && super.eval(bounds[0]) <= super.eval(bounds[1]);
+        return super.validate(bounds[0]) && super.validate(bounds[1]) && super.versionEval(bounds[0]) <= super.versionEval(bounds[1]);
     }
 }

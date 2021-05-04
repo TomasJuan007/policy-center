@@ -16,7 +16,7 @@ public abstract class AbstractComparableOpStrategy implements OpStrategy {
         }
         if (useVersion) {
             return values.stream()
-                    .map(this::eval)
+                    .map(this::versionEval)
                     .collect(Collectors.toList());
         }
         try {
@@ -35,16 +35,14 @@ public abstract class AbstractComparableOpStrategy implements OpStrategy {
             return false;
         }
         for (String v : ver) {
-            try {
-                Double.parseDouble(v);
-            } catch (NumberFormatException e) {
+            if (v.length()>2) {
                 return false;
             }
         }
         return true;
     }
 
-    double eval(String myVal) {
+    double versionEval(String myVal) {
         String[] ver = myVal.split("\\.");
         double sum = 0;
         for (int i=0; i<SUPPORT_VERSION_NUM; i++) {
@@ -66,16 +64,40 @@ public abstract class AbstractComparableOpStrategy implements OpStrategy {
         if (!(val instanceof String)) {
             return false;
         }
+        String value = (String) val;
 
-        if (isVersionFormat((String) val)) {
+        //所有字符需要是数字或小数点
+        if (!isAllNumericChar(value)) {
+            return false;
+        }
+
+        //符合数值格式
+        try {
+            Double.parseDouble((String) val);
+            return true;
+        } catch (Exception e) {
+        }
+
+        //符合版本号格式
+        if (isVersionFormat(value)) {
             return true;
         }
 
-        try {
-            Double.parseDouble((String) val);
-        } catch (Exception e) {
+        return false;
+    }
+
+    private static boolean isAllNumericChar(String cs) {
+        if (cs != null && cs.length() != 0) {
+            int sz = cs.length();
+
+            for (int i = 0; i < sz; ++i) {
+                if (!Character.isDigit(cs.charAt(i)) && cs.charAt(i)!='.') {
+                    return false;
+                }
+            }
+            return true;
+        } else {
             return false;
         }
-        return true;
     }
 }
