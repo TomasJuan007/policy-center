@@ -29,3 +29,6 @@ A rule engine based on Nested Set Model.
 # 下一步
 - 数据库表按不同的规则引擎算法拆分
 - 考虑是否可以用访问者模式代替栈
+
+# Reference
+RoaringBitmap原理——<https://www.jianshu.com/p/818ac4e90daf>
