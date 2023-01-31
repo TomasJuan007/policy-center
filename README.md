@@ -31,6 +31,6 @@ A rule engine based on Nested Set Model.
 - 考虑是否可以用访问者模式代替栈
 
 # Reference
-RoaringBitmap原理——<https://www.jianshu.com/p/818ac4e90daf>
-规则引擎|心内求法——<http://holbrook.github.io/tags/%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E/>
+- RoaringBitmap原理——<https://www.jianshu.com/p/818ac4e90daf>
+- 规则引擎|心内求法——<http://holbrook.github.io/tags/%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E/>
 
