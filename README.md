@@ -32,3 +32,5 @@ A rule engine based on Nested Set Model.
 
 # Reference
 RoaringBitmap原理——<https://www.jianshu.com/p/818ac4e90daf>
+规则引擎|心内求法——<http://holbrook.github.io/tags/%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E/>
+
